@@ -25,3 +25,8 @@ Q4 Notes: For the A* search implementation i used the same structure as the UCS 
 Q5 Notes: The state structure i chose for the corners agent implementation is (Pacman location coordinates, tuple of four boolean variables to show visited or not corners)
           Get start state performs a check to see if Pacman starts at a corner, in which case we need to cast the tuple into a list to mutate it (switch the according boolean variable)
           and then convert it back into a tuple so that it remains hashable for the visited set we used in the above (Q 1-4) algos.
+
+Q6 Notes: For the corners heuristic, i calculate the manhattan distance from Pacman's current
+          position to every unvisited corner, and return the max of those. Its admissible since it
+          never overestimates (without walls it will take atleast this many steps to get to that corner),
+          and it is consistent because the estimates shrink smoothly (by at most 1, each step Pacman takes).
