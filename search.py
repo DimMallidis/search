@@ -147,7 +147,7 @@ def uniformCostSearch(problem: SearchProblem):
     visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
     PriorityQueue = util.PriorityQueue() # priority queue to implement UCS, with the priority being the least accumulated cost
 
-    # we are passing a tuple of (node, path, cost) to the priority queue, with the priority being the cost
+    # we are passing a tuple of (node, path, cost) to the priority queue, with the priority being the accumulated cost
     PriorityQueue.push((start_node, [], 0), 0)
 
     while not PriorityQueue.isEmpty():
@@ -179,8 +179,33 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    "*** MY CODE HERE ***"
+    start_node = problem.getStartState() # get the start node
+    visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
+    PriorityQueue = util.PriorityQueue() # priority queue to implement A*, since we're just adding the heuristic to the cost, we can use the same structure as UCS
+
+    # we are passing a tuple of (node, path, cost) to the priority queue, with the priority being the accumulated cost + heuristic
+    PriorityQueue.push((start_node, [], 0), 0 + heuristic(start_node, problem)) # 0 is to show the existence of the cost
+
+    while not PriorityQueue.isEmpty():
+
+        # pop current node, path and cost
+        current_node, path, current_cost = PriorityQueue.pop()
+
+        # if we have reached the goal state, return the path
+        if problem.isGoalState(current_node):
+            return path
+
+        # add current node to visited, if not already, and add its successors to the priority queue
+        # make sure to calculatte the new cost for each successor when passing him to the pq
+        if current_node not in visited:
+            visited.add(current_node)
+            for next_node, action, next_cost in problem.getSuccessors(current_node):
+                PriorityQueue.push((next_node, path + [action], current_cost + next_cost), current_cost + next_cost + heuristic(next_node, problem))
+
+    #if no path is found, return empty list
+    return []    
+    "*** MY CODE HERE ***"
 
 
 # Abbreviations

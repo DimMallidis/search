@@ -17,4 +17,7 @@ Q2 Notes: For the BFS implementation i use a set again to store the visited node
 
 Q3 Notes: For the UCS implementation i use a set again to store the visited nodes and now
           a priority queue, which arranges them so the next to be popped is the one with the lowest priority. I make use of that characteristic described in util.py since thats exactly what UCS needs, if the priority is
-          set as the accumulated cost from the starting node to reach the successor.
+          set as the accumulated cost to reach the successor from the start node.
+
+Q4 Notes: For the A* search implementation i used the same structure as the UCS implementation, with a set for visited nodes and
+          priority queue, with the main difference being the priority now being calculated as the accumulated cost to reach the successor from the start node plus the heuristic cost.
