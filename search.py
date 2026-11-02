@@ -87,12 +87,36 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    start_node = problem.getStartState() # get the start node
+    visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
+    Stack = util.Stack() # stack to implement DFS, since its LIFO
+
+    Stack.push((start_node, []))
+
+    while not Stack.isEmpty():
+
+        # pop current node and path
+        current_node, path = Stack.pop()
+
+        # if we have reached the goal state, return the path
+        if problem.isGoalState(current_node):
+            return path
+        
+        # add current node to visited, if not already, and add its successors to the stack
+        if current_node not in visited:
+            visited.add(current_node)
+            for next_node, action, cost in problem.getSuccessors(current_node):
+                Stack.push((next_node, path + [action]))
+    
+    #if no path is found, return empty list
+    return [] 
+    "*** YOUR CODE HERE ***"
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    "*** YOUR CODE HERE ***"
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
