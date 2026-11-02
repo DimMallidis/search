@@ -295,15 +295,28 @@ class CornersProblem(search.SearchProblem):
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        "*** MY CODE HERE ***"
+        # return a tuple of the starting position and a tuple that keeps track of which corners pacman has visited
+        visitedCorners = (False, False, False, False)
+        visitedCorners = list(visitedCorners) # convert tuple to list to make it mutable
+        if self.startingPosition in self.corners:
+            index = self.corners.index(self.startingPosition) # which corner is pacman visiting
+            visitedCorners[index] = True # change that one to true
+        visitedCorners = tuple(visitedCorners) # convert back to tuple
+
+        return (self.startingPosition, visitedCorners)
+        "*** MY CODE HERE ***"
 
     def isGoalState(self, state: Any):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        "*** MY CODE HERE ***"
+        # for this problem, the goal state is when pacman visits his last corner
+        if state[1] == (True, True, True, True):
+            return True
+        return False
+        "*** MY CODE HERE ***"
 
     def getSuccessors(self, state: Any):
         """
@@ -325,7 +338,29 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
+            "*** MY CODE HERE ***"
+            # check if action is legal (doesnt hit a wall)
+            x, y = state[0]
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+
+            # if legal, check if its a corner to update the corner tuple
+            if not hitsWall:
+                nextPosition = (nextx, nexty)
+                visitedCorners = list(state[1]) # convert tuple to list to make it mutable, then convert back
+                if nextPosition in self.corners:
+                    index = self.corners.index(nextPosition) # which corner is pacman visiting
+                    visitedCorners[index] = True # change that one to true
+                visitedCorners = tuple(visitedCorners) # convert back to tuple
+                
+                # create the state structure
+                nextState = (nextPosition, visitedCorners)
+
+                # since its legal, add successor to the list
+                successors.append((nextState, action, 1))
+
+            "*** MY CODE HERE ***"
 
         self._expanded += 1 # DO NOT CHANGE
         return successors

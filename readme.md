@@ -21,3 +21,7 @@ Q3 Notes: For the UCS implementation i use a set again to store the visited node
 
 Q4 Notes: For the A* search implementation i used the same structure as the UCS implementation, with a set for visited nodes and
           priority queue, with the main difference being the priority now being calculated as the accumulated cost to reach the successor from the start node plus the heuristic cost.
+
+Q5 Notes: The state structure i chose for the corners agent implementation is (Pacman location coordinates, tuple of four boolean variables to show visited or not corners)
+          Get start state performs a check to see if Pacman starts at a corner, in which case we need to cast the tuple into a list to mutate it (switch the according boolean variable)
+          and then convert it back into a tuple so that it remains hashable for the visited set we used in the above (Q 1-4) algos.
