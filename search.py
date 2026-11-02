@@ -115,7 +115,29 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    start_node = problem.getStartState() # get the start node
+    visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
+    Queue = util.Queue() # queue to implement BFS, since its FIFO
 
+    Queue.push((start_node, []))
+
+    while not Queue.isEmpty():
+
+        # pop current node and path
+        current_node, path = Queue.pop()
+
+        # if we have reached the goal state, return the path
+        if problem.isGoalState(current_node):
+            return path
+        
+        # add current node to visited, if not already, and add its successors to the queue
+        if current_node not in visited:
+            visited.add(current_node)
+            for next_node, action, cost in problem.getSuccessors(current_node):
+                Queue.push((next_node, path + [action]))
+
+    #if no path is found, return empty list
+    return []
     "*** YOUR CODE HERE ***"
 
 def uniformCostSearch(problem: SearchProblem):
