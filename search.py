@@ -86,7 +86,7 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
+    "*** MY CODE HERE ***"
     start_node = problem.getStartState() # get the start node
     visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
     Stack = util.Stack() # stack to implement DFS, since its LIFO
@@ -110,11 +110,11 @@ def depthFirstSearch(problem: SearchProblem):
     
     #if no path is found, return empty list
     return [] 
-    "*** YOUR CODE HERE ***"
+    "*** MY CODE HERE ***"
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    "*** MY CODE HERE ***"
     start_node = problem.getStartState() # get the start node
     visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
     Queue = util.Queue() # queue to implement BFS, since its FIFO
@@ -138,12 +138,37 @@ def breadthFirstSearch(problem: SearchProblem):
 
     #if no path is found, return empty list
     return []
-    "*** YOUR CODE HERE ***"
+    "*** MY CODE HERE ***"
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    "*** MY CODE HERE ***"
+    start_node = problem.getStartState() # get the start node
+    visited = set() # create a set to keep track of visited nodes, important for lookup and to avoid duplicates
+    PriorityQueue = util.PriorityQueue() # priority queue to implement UCS, with the priority being the least accumulated cost
+
+    # we are passing a tuple of (node, path, cost) to the priority queue, with the priority being the cost
+    PriorityQueue.push((start_node, [], 0), 0)
+
+    while not PriorityQueue.isEmpty():
+
+        # pop current node, path and cost
+        current_node, path, current_cost = PriorityQueue.pop()
+
+        # if we have reached the goal state, return the path
+        if problem.isGoalState(current_node):
+            return path
+
+        # add current node to visited, if not already, and add its successors to the priority queue
+        # make sure to calculatte the new cost for each successor when passing him to the pq
+        if current_node not in visited:
+            visited.add(current_node)
+            for next_node, action, next_cost in problem.getSuccessors(current_node):
+                PriorityQueue.push((next_node, path + [action], current_cost + next_cost), current_cost + next_cost)
+
+    #if no path is found, return empty list
+    return []
+    "*** MY CODE HERE ***"
 
 def nullHeuristic(state, problem=None):
     """
