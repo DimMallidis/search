@@ -30,3 +30,10 @@ Q6 Notes: For the corners heuristic, i calculate the manhattan distance from Pac
           position to every unvisited corner, and return the max of those. Its admissible since it
           never overestimates (without walls it will take atleast this many steps to get to that corner),
           and it is consistent because the estimates shrink smoothly (by at most 1, each step Pacman takes).
+
+Q7 Notes: For the food heuristic, i calculate the true maze distance from Pacman to every remaining food
+          pellet and return the max one. The true maze distance calculation is implemented in a helper
+          function called mazeDistance. Using manhattan would not be close enough to the real number of
+          steps to reach the goal state so too many nodes would have been expanded. The heuristic is
+          admissible since Pacman has to take atleast the shortest path to the furthest pellet to finish the game, if he deviates because theres more food left, the steps are naturally more. Its also
+          consistent, since again, when Pacman moves one step, the heuristic will decrease by at most 1.
