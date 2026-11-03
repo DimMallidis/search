@@ -37,3 +37,8 @@ Q7 Notes: For the food heuristic, i calculate the true maze distance from Pacman
           steps to reach the goal state so too many nodes would have been expanded. The heuristic is
           admissible since Pacman has to take atleast the shortest path to the furthest pellet to finish the game, if he deviates because theres more food left, the steps are naturally more. Its also
           consistent, since again, when Pacman moves one step, the heuristic will decrease by at most 1.
+
+Q8 Notes: For the closest dot search, i implemented isGoalState to return true if there is food at
+          the current state. In findPathToClosestDot, i used the bfs algo we implemented in Q2.
+          BFS searches evenly at every direction (growing circle) so the first food pellet it finds is
+          the closest one.
